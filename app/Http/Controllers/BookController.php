@@ -1,107 +1,54 @@
 <?php
 
-
 namespace App\Http\Controllers;
-
 
 use App\Book;
 use App\Library;
-use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller implements Library
 {
-
     /**
-     * @param int $id
+     * @param \App\int|int $id
      * @return Book
      */
-    function getBookById(int $id): Book
+    function getBookById($id): Book
     {
-        $query = DB::table('books')
-            ->find($id);
-
-        return new Book(
-            $query->id,
-            $query->author,
-            $query->name,
-            $query->year,
-            $query->manufacture
-        );
+        return Book::findOrFail($id);
     }
 
     /**
-     * @param string $author
+     * @param \App\string|string $author
      * @return Book
      */
-    function getBookByAuthor(string $author): Book
+    function getBookByAuthor($author): Book
     {
-        $query = DB::table('books')
-            ->where('author', $author)
-            ->first();
-
-        return new Book(
-            $query->id,
-            $query->author,
-            $query->name,
-            $query->year,
-            $query->manufacture
-        );
+        return Book::where('author', '=', $author)->firstOrFail();
     }
 
     /**
-     * @param string $name
+     * @param \App\string|string $name
      * @return Book
      */
-    function getBookByName(string $name): Book
+    function getBookByName($name): Book
     {
-        $query = DB::table('books')
-            ->where('name', $name)
-            ->first();
-
-        return new Book(
-            $query->id,
-            $query->author,
-            $query->name,
-            $query->year,
-            $query->manufacture
-        );
+        return Book::where('name', '=', $name)->firstOrFail();
     }
 
     /**
-     * @param int $year
+     * @param \App\int|int $year
      * @return Book
      */
-    function getBookByYear(int $year): Book
+    function getBookByYear($year): Book
     {
-        $query = DB::table('books')
-            ->where('year', $year)
-            ->first();
-
-        return new Book(
-            $query->id,
-            $query->author,
-            $query->name,
-            $query->year,
-            $query->manufacture
-        );
+        return Book::where('year', '=', $year)->firstOrFail();
     }
 
     /**
-     * @param string $man
+     * @param \App\string|string $man
      * @return Book
      */
-    function getBookByManufacture(string $man): Book
+    function getBookByManufacture($man): Book
     {
-        $query = DB::table('books')
-            ->where('manufacture', $man)
-            ->first();
-
-        return new Book(
-            $query->id,
-            $query->author,
-            $query->name,
-            $query->year,
-            $query->manufacture
-        );
+        return Book::where('manufacture', '=', $man)->firstOrFail();
     }
 }
